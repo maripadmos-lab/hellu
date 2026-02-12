@@ -1,0 +1,87 @@
+
+        :root {
+            --primary-pink: #ff85a2;
+            --secondary-pink: #fbb1bd;
+            --soft-white: #fff0f3;
+            --accent-gold: #ffd166;
+            --danger-rose: #ef476f;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--soft-white);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px;
+            color: #4a4a4a;
+        }
+
+        h2 { color: #d63384; margin-bottom: 20px; font-weight: 300; letter-spacing: 1px; }
+
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(255, 133, 162, 0.2);
+            width: 100%;
+            max-width: 800px;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        input {
+            padding: 12px;
+            border: 2px solid var(--secondary-pink);
+            border-radius: 10px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        input:focus { border-color: var(--primary-pink); }
+
+        #addBtn {
+            background-color: var(--primary-pink);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            width: fit-content;
+        }
+
+        #addBtn:hover { background-color: #ff5c8a; }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        thead {
+            background-color: #ff85a2;
+            color: white;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #ffe5ec;
+        }
+
+        .actions button {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-right: 5px;
+        }
+
+        .edit-btn { background-color: var(--accent-gold); color: white; }
+        .delete-btn { background-color: var(--danger-rose); color: white; }

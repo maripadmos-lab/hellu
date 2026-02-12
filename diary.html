@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SUPER TOP SECRET DIARY!</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --main-pink: #ffafcc;
+            --soft-pink: #ffc8dd;
+            --dark-pink: #fb6f92;
+            --glass: rgba(255, 255, 255, 0.7);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #faa2d1 0%, #7e9841 100%);
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            color: #4a4a4a;
+        }
+
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3.5rem;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 10px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        input, textarea {
+            border: none;
+            border-radius: 12px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.9);
+            font-family: inherit;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        input:focus, textarea:focus {
+            box-shadow: 0 0 0 3px var(--soft-pink);
+        }
+
+        button {
+            background-color: var(--dark-pink);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, background 0.3s;
+        }
+
+        button:hover {
+            background-color: #779f35;
+            transform: translateY(-2px);
+        }
+
+        hr {
+            border: 0;
+            height: 1px;
+            background: var(--main-pink);
+            margin: 30px 0;
+        }
+
+        .entries-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .journal-card {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            border-left: 5px solid var(--main-pink);
+            animation: fadeIn 0.5s ease;
+            position: relative;
+        }
+
+        .journal-card h3 {
+            margin: 0 0 10px 0;
+            color: var(--dark-pink);
+        }
+
+        .journal-card .date {
+            font-size: 0.8rem;
+            color: #999;
+            margin-bottom: 10px;
+        }
+
+        .delete-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            color: #ccc;
+            font-size: 1.2rem;
+        }
+
+        .delete-btn:hover {
+            color: var(--dark-pink);
+            background: none;
+            transform: none;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Padmos's Totally Secret Journal</h1>
+    <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExMGJoNTdkb3Mxd2loenZrc21uazljdmpudThoM3l1c3c5ajY5YnhhZiZlcD12MV9naWZzX3NlYXJjaCZjdD1n/V216rdoG6TUVvXA0Tb/giphy.gif" alt="Mitsuri Kanroji">
+    <br>
+
+    <div class="container">
+        <div class="input-group">
+            <input type="text" id="title" placeholder="Title of your day...">
+             <a href="/index.html" class="btn">back</a>
+            <textarea id="content" rows="4" placeholder="Spill the tea right NEOW...plz..."></textarea>
+            <button onclick="addEntry()">Keep it a Secret okkkieeee! ✨</button>
+        </div>
+
+        <hr>
+
+        <div id="entries" class="entries-container">
+            </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', displayEntries);
+
+        function addEntry() {
+            const title = document.getElementById('title').value;
+            const content = document.getElementById('content').value;
+            const date = new Date().toLocaleDateString('en-US', { 
+                weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' 
+            });
+
+            if (!title || !content) {
+                alert("brochacho did NOT write anything im crine.");
+                return;
+            }
+
+            const entry = { title, content, date, id: Date.now() };
+            
+            let entries = JSON.parse(localStorage.getItem('myEntries')) || [];
+            entries.unshift(entry);
+            localStorage.setItem('myEntries', JSON.stringify(entries));
+
+            document.getElementById('title').value = '';
+            document.getElementById('content').value = '';
+            
+            displayEntries();
+        }
+
+        function displayEntries() {
+            const entriesDiv = document.getElementById('entries');
+            const entries = JSON.parse(localStorage.getItem('myEntries')) || [];
+            
+            entriesDiv.innerHTML = entries.map(entry => `
+                <div class="journal-card">
+                    <button class="delete-btn" onclick="deleteEntry(${entry.id})">×</button>
+                    <div class="date">${entry.date}</div>
+                    <h3>${entry.title}</h3>
+                    <p>${entry.content}</p>
+                </div>
+            `).join('');
+        }
+
+        function deleteEntry(id) {
+            let entries = JSON.parse(localStorage.getItem('myEntries'));
+            entries = entries.filter(e => e.id !== id);
+            localStorage.setItem('myEntries', JSON.stringify(entries));
+            displayEntries();
+        }
+    </script>
+</body>
+</html>
